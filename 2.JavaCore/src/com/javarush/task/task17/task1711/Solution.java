@@ -1,5 +1,6 @@
 package com.javarush.task.task17.task1711;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -19,8 +20,31 @@ public class Solution {
     public static void main(String[] args) {
         //start here - начни тут
         //args = new String[]{"-c", "Миронов", "м", "15/04/1990"};
+        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+        DateFormat dateFormatPrt = new SimpleDateFormat("dd-MMM-yyyy", Locale.ENGLISH);
         switch(args[0]){
-            case("-c"): synchronized(allPeople){Create(args);}
+            case("-c"): for (int step = 1; step < args.length; step += 3) {
+                Date date = null;
+                try {
+                    date = dateFormat.parse(args[step + 2]);
+                } catch (ParseException e) {
+                    e.getMessage();
+                }
+
+                //VALIDATOR: При запуске программы с параметром -с программа должна добавлять человека с заданными
+                // параметрами в конец списка allPeople, и выводить id (index) на экран.
+                Person person;
+                if (args[step + 1].startsWith("м"))
+                    person = Person.createMale(args[step], date);
+                else
+                    person = Person.createFemale(args[step], date);
+
+                synchronized (allPeople) {
+                    allPeople.add(person);
+                }
+
+                System.out.println(allPeople.indexOf(person));
+            }
                 break;
             case("-u"): synchronized(allPeople){Update(args);}
                 break;
