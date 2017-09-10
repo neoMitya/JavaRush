@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 /* 
 Сортировка байт
@@ -16,19 +18,19 @@ public class Solution {
         String file = reader.readLine();
         FileInputStream fileInputStream = new FileInputStream(file);
 
-        Map<Integer, Integer> map = new TreeMap<>();
+        Set<Integer> set = new TreeSet<>();
         while(fileInputStream.available() > 0){
             int data = fileInputStream.read();
-            map.put(data, null);
+            set.add(data);
         }
         fileInputStream.close();
         reader.close();
-        if(map.isEmpty()){
+        if(set.isEmpty()){
             return;
         }
 
-        for(Map.Entry<Integer, Integer> pair : map.entrySet()){
-            System.out.print(pair.getKey() + " " );
+        for(int i : set){
+            System.out.print(i + " " );
         }
     }
 }
