@@ -14,7 +14,7 @@ import java.util.Collections;
 
 public class Solution {
     public static void main(String[] args) throws IOException{
-        args = new String[]{"span"};
+        args = new String[]{"b"};
         String tag = args[0];
         String openTag = "<" + tag;
         String closeTag = "</" + tag + ">";
@@ -52,7 +52,6 @@ public class Solution {
         tagArr.addAll(closeTagArr);
         Collections.sort(tagArr);
 
-
         ArrayList<Tag> arr = new ArrayList<Tag>();
 
         openIndex = 0;
@@ -62,11 +61,19 @@ public class Solution {
                 i += 2;
                 arr.add(new Tag(openTagArr.get(openIndex++), closeTagArr.get(closeIndex++)));
             }else{
-                i += 4;
-                arr.add(new Tag(openTagArr.get(openIndex), closeTagArr.get(closeIndex + 1)));
-                arr.add(new Tag(openTagArr.get(openIndex + 1), closeTagArr.get(closeIndex)));
-                openIndex += 2;
-                closeIndex += 2;
+                int k = 0;
+                while(openTagArr.get(openIndex) < closeTagArr.get(closeIndex)){
+                    openIndex++;
+                    k++;
+                }
+                ArrayList<Tag> arrTemp = new ArrayList<Tag>();
+                for(int j = 1; j <= k; j++){
+                    arrTemp.add(new Tag(openTagArr.get(openIndex - j), closeTagArr.get(closeIndex++)));
+                }
+                for(int j = arrTemp.size()-1; j >= 0; j--){
+                    arr.add(arrTemp.get(j));
+                }
+                i += k*2;
             }
         }
 
@@ -76,8 +83,8 @@ public class Solution {
 
     }
     private static class Tag{
-        private int openTag;
-        private int closeTag;
+        public int openTag;
+        public int closeTag;
 
         public Tag(int openTag, int closeTag){
             this.openTag = openTag;
