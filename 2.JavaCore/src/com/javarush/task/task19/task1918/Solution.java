@@ -14,16 +14,16 @@ import java.util.Collections;
 
 public class Solution {
     public static void main(String[] args) throws IOException{
-        args = new String[]{"b"};
+        //args = new String[]{"b"};
         String tag = args[0];
         String openTag = "<" + tag;
         String closeTag = "</" + tag + ">";
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String file = reader.readLine();
-        reader.close();
+        BufferedReader consoleReader = new BufferedReader(new InputStreamReader(System.in));
+        String file = consoleReader.readLine();
+        consoleReader.close();
 
         FileReader fileReader = new FileReader(file);
-        reader = new BufferedReader(fileReader);
+        BufferedReader reader = new BufferedReader(fileReader);
 
         String line = "";
         StringBuilder sb = new StringBuilder();
